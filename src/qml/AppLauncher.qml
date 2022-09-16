@@ -47,10 +47,6 @@ Drawer {
 
     LauncherFolderModel{
         id: launcherModel
-
-        Component.onCompleted: {
-            blacklistedApplications = fileUtils.getBlacklistedApplications();
-        }
     }
 
     GridView {
