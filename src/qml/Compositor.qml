@@ -60,13 +60,21 @@ Item {
             id: homeLayer
             z: 1
             anchors.fill: parent
-            visible: true //!LipstickSettings.lockscreenVisible
+            opacity: LipstickSettings.lockscreenVisible ? 0 : 1
+
+            Behavior on opacity {
+                NumberAnimation { duration: 200 }
+            }
         }
 
         Item {
             id: appLayer
             z: 2
-            visible: true //!LipstickSettings.lockscreenVisible
+            opacity: LipstickSettings.lockscreenVisible ? 0 : 1
+
+            Behavior on opacity {
+                NumberAnimation { duration: 200 }
+            }
         }
 
         Item {
@@ -294,6 +302,22 @@ Item {
             LipstickSettings.lockscreenVisible = true
         } else {
             LipstickSettings.lockscreenVisible = false
+        }
+    }
+
+    LockScreen {
+        id: lockScreen
+        z: 7
+        rotation: Screen.angleBetween(comp.screenOrientation, Screen.primaryOrientation)
+        width: ((comp.screenOrientation == Qt.PortraitOrientation || 
+            comp.screenOrientation == Qt.InvertedPortraitOrientation) 
+            ? parent.width : parent.height)
+        height: ((comp.screenOrientation == Qt.PortraitOrientation || 
+            comp.screenOrientation == Qt.InvertedPortraitOrientation) 
+            ? parent.height : parent.width)
+
+        Component.onCompleted: {
+            setLockScreen(true);
         }
     }
 }
