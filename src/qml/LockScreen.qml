@@ -49,7 +49,7 @@ Item {
         y: 0
         width: root.width
         height: root.height
-        color: "white"
+        color: "black"
         opacity: 0.5
     }
 
@@ -64,6 +64,15 @@ Item {
             anchors.fill: contentItem
         }
 
+
+        StatusBar {
+            id: statusbar
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            z: 10
+        }
+
         Text { 
             id: lockscreenTime
             color: "white"
@@ -74,6 +83,15 @@ Item {
             anchors { centerIn: parent }
         }
 
+        DropShadow {
+            anchors.fill: lockscreenTime
+            source: lockscreenTime
+            verticalOffset: 3
+            color: "#80000000"
+            radius: 3
+            samples: 3
+        }
+
         Text { 
             id: lockscreenDate
             color: "white"
@@ -82,6 +100,15 @@ Item {
             font.family: "Lato"
             font.weight: Font.Black
             anchors { right: lockscreenTime.right; top: lockscreenTime.bottom }
+        }
+
+        DropShadow {
+            anchors.fill: lockscreenDate
+            source: lockscreenDate
+            verticalOffset: 3
+            color: "#80000000"
+            radius: 3
+            samples: 3
         }
 
         Timer {

@@ -24,7 +24,7 @@ Item {
         text: "Notifications"
         font.pixelSize: 5 * Screen.pixelDensity
         font.weight: Font.Light
-        color: "black"
+        color: "white"
     }
 
     Behavior on opacity {

@@ -26,19 +26,6 @@ Page {
         id: switcherModel
     }
 
-    states: [
-        State {
-            name: "switcher"
-            
-        },
-        State {
-            name: "feed"
-            
-        }
-    ]
-
-    state: "switcher"
-
     HapticsEffect {
         id: rumbleEffect
         attackIntensity: 0.0
@@ -70,14 +57,25 @@ Page {
         Rectangle {
             opacity: 0.6
             anchors.fill: parent
-            color: "white"
+            color: "black"
         }
+    }
+
+    StatusBar {
+        id: statusbar
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        z: 10
     }
 
     SwipeView{
         id: homeSwipe
         interactive: true
-        anchors.fill: parent
+        anchors.top: statusbar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
 
         property bool onFeedPage: false
         property bool handleIndex: false

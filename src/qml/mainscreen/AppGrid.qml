@@ -14,7 +14,7 @@ import "../scripts/desktop.js" as Desktop
 GridView {
     id: appgrid
     width: root.width
-    height: root.height
+    height: root.height - statusbar.height
     cellWidth: switcherModel.itemCount > 4 ? width / Math.ceil(Math.sqrt(switcherModel.itemCount)) : width / 2
     cellHeight: switcherModel.itemCount > 4 ? height / Math.ceil(Math.sqrt(switcherModel.itemCount)) : height / 2
     model: switcherModel
@@ -27,7 +27,7 @@ GridView {
             id: dimItem
             anchors.fill: parent
             anchors.margins: Screen.pixelDensity
-            color: "white"
+            color: "black"
             opacity: 0.6
         }
 

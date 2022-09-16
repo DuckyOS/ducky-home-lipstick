@@ -40,7 +40,7 @@ Drawer {
         Rectangle {
             id: dimItem
             anchors.fill: parent
-            color: "white"
+            color: "black"
             opacity: 0.5
         }
     }

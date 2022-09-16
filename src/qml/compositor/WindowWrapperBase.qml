@@ -60,7 +60,7 @@ Item {
             width: wrapper.width
             height: wrapper.height
             Rectangle {
-                color: "white"
+                color: "black"
                 x: oMask.clipX
                 y: oMask.clipY
                 width: oMask.clipW
