@@ -9,8 +9,6 @@ import org.nemomobile.configuration 1.0
 Item {
     id: wallpaper
 
-    property double shade: 0.0
-
     ConfigurationValue {
         id: wallpaperSource
         key: "/home/ducky/homeScreen/wallpaper"
@@ -37,26 +35,5 @@ Item {
         anchors.fill: parent
         source: wallpaperSource.value
         fillMode: Image.PreserveAspectCrop
-    }
-
-    FastBlur {
-        id: blurItem
-        source: wallpaperImage
-        anchors.fill: parent
-        radius: 64
-        opacity: shade
-        Behavior on opacity {
-            NumberAnimation { duration: 200 }
-        }
-    }
-
-    Rectangle {
-        id: dimItem
-        anchors.fill: parent
-        color: "white"
-        opacity: shade * 0.6
-        Behavior on opacity {
-            NumberAnimation { duration: 200 }
-        }
     }
 }

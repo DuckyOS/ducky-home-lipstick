@@ -58,7 +58,7 @@ Item {
 
         Item {
             id: homeLayer
-            z: comp.homeActive ? 4 : 1
+            z: 1
             anchors.fill: parent
             visible: true //!LipstickSettings.lockscreenVisible
         }
@@ -109,23 +109,6 @@ Item {
             orientationConfig.value = screenOrientation;
         }
 
-        function openWindowTransparent(winId) {
-            var o = comp.windowForId(winId);
-            var window = null;
-
-            if (o) {
-                window = o.userData;
-            }
-
-            if (window == null) {
-                window = homeWindow;
-            }
-
-            setCurrentWindow(window);
-
-            window.opacity = 0;
-        }
-
         function animateInById(winId) {
             var o = comp.windowForId(winId);
             var window = null;
@@ -136,7 +119,8 @@ Item {
 
             if (window == null) return;
 
-            if (comp.topmostWindow) comp.topmostWindow.animateOut();
+            if (comp.topmostWindow) 
+                if (!comp.homeActive) comp.topmostWindow.animateOut();
             setCurrentWindow(window);
             window.animateIn();
         }
@@ -152,13 +136,11 @@ Item {
 
             if (topmostWindow == homeWindow || topmostWindow == null) {
                 clearKeyboardFocus();
-                wallpaperItem.shade = 0.0;
             } else {
                 topmostApplicationWindow = topmostWindow;
                 topmostApplicationWindow.visible = true;
 
                 if (w.window) w.window.takeFocus();
-                wallpaperItem.shade = 1.0;
             }
         }
 
@@ -260,40 +242,26 @@ Item {
 
             if (gesture == "close") {
                 if (!comp.homeActive && mouseReal.y > threshold) {
-                    rumbleEffect.start();
-                    Lipstick.compositor.closeClientForWindowId(comp.topmostApplicationWindow.window.windowId);
-                }
-
-                if (comp.topmostApplicationWindow) {
-                    comp.topmostApplicationWindow.window.visible = true;
-                    comp.topmostApplicationWindow.oMaskItem.visible = false;
-                    comp.topmostApplicationWindow.oMaskItem.opacity = 1.0;
+                    comp.topmostApplicationWindow.slideDown();
+                } else if (!comp.homeActive) {
+                    comp.topmostApplicationWindow.resetDown();
                 }
             } else if (gesture == "left") {
                 if (!comp.homeActive && mouseReal.x > threshold) {
-                    rumbleEffect.start();
-                    comp.animateInById(comp.homeWindow.window.windowId);
-                }
-
-                if (comp.topmostApplicationWindow) {
-                    comp.topmostApplicationWindow.window.visible = true;
-                    comp.topmostApplicationWindow.oMaskItem.visible = false;
-                    comp.topmostApplicationWindow.oMaskItem.opacity = 1.0;
+                    comp.topmostApplicationWindow.slideRight();
+                } else if (!comp.homeActive) {
+                    comp.topmostApplicationWindow.resetRight();
                 }
             } else if (gesture == "right") {
                 if (!comp.homeActive && mouseReal.x < _mapTo.width - threshold) {
-                    rumbleEffect.start();
-                    comp.animateInById(comp.homeWindow.window.windowId);
-                }
-
-                if (comp.topmostApplicationWindow) {
-                    comp.topmostApplicationWindow.window.visible = true;
-                    comp.topmostApplicationWindow.oMaskItem.visible = false;
-                    comp.topmostApplicationWindow.oMaskItem.opacity = 1.0;
+                    comp.topmostApplicationWindow.slideLeft();
+                } else if (!comp.homeActive) {
+                    comp.topmostApplicationWindow.resetLeft();
                 }
             } else {
                 mouse.accepted = false;
             }
+
             gesture = "";
         }
 
@@ -303,17 +271,19 @@ Item {
             if (gesture == "close") {
                 if (!comp.homeActive) {
                     comp.topmostApplicationWindow.oMaskItem.opacity = 1 - mouseReal.y / _mapTo.height;
-                    wallpaperItem.shade = 1 - mouseReal.y / _mapTo.height;
+                    comp.topmostApplicationWindow.oMaskItem.clipY = mouseReal.y;
+                    comp.topmostApplicationWindow.oMaskItem.clipH = _mapTo.height - mouseReal.y;
                 }
             } else if (gesture == "left") {
                 if (!comp.homeActive) {
                     comp.topmostApplicationWindow.oMaskItem.opacity = 1 - mouseReal.x / _mapTo.width;
-                    wallpaperItem.shade = 1 - mouseReal.x / _mapTo.width;
+                    comp.topmostApplicationWindow.oMaskItem.clipX = mouseReal.x;
+                    comp.topmostApplicationWindow.oMaskItem.clipW = _mapTo.width - mouseReal.x;
                 }
             } else if (gesture == "right") {
                 if (!comp.homeActive) {
                     comp.topmostApplicationWindow.oMaskItem.opacity = mouseReal.x / _mapTo.width;
-                    wallpaperItem.shade = mouseReal.x / _mapTo.width;
+                    comp.topmostApplicationWindow.oMaskItem.clipW = mouseReal.x;
                 }
             }
         }
