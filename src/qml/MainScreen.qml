@@ -9,6 +9,7 @@ import Ducky 1.0
 import org.nemomobile.lipstick 0.1
 import org.nemomobile.configuration 1.0
 
+import "mainscreen"
 import "scripts/desktop.js" as Desktop
 
 Page {
@@ -133,76 +134,11 @@ Page {
 
     Component {
         id: feedPageComponent
-        Item {
-            id: feedPage
-            width: root.width
-            height: root.height
-
-            Label {
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.margins: 5 * Screen.pixelDensity
-                anchors.topMargin: 3 * Screen.pixelDensity
-                text: "Notifications"
-                font.pixelSize: 5 * Screen.pixelDensity
-                font.weight: Font.Light
-                color: "black"
-            }
-
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
-        }
+        FeedPage {}
     }
 
     Component {
         id: appgridComponent
-        GridView {
-            id: appgrid
-            width: root.width
-            height: root.height
-            cellWidth: switcherModel.itemCount > 4 ? width / Math.ceil(Math.sqrt(switcherModel.itemCount)) : width / 2
-            cellHeight: switcherModel.itemCount > 4 ? height / Math.ceil(Math.sqrt(switcherModel.itemCount)) : height / 2
-            model: switcherModel
-            interactive: false
-            delegate: Item {
-                width: appgrid.cellWidth
-                height: appgrid.cellHeight
-
-                Rectangle {
-                    id: dimItem
-                    anchors.fill: parent
-                    anchors.margins: Screen.pixelDensity
-                    color: "white"
-                    opacity: 0.6
-                }
-
-                WindowPixmapItem {
-                    id: windowPixmap
-                    anchors.fill: parent
-                    anchors.margins: Screen.pixelDensity
-                    windowId: model.window
-                    smooth: true
-                    opacity: 1
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    property int threshold: 5 * Screen.pixelDensity
-                    property Item _mapTo: root
-                    onClicked: {
-                        Lipstick.compositor.animateInById(model.window);
-                        /*var mouseReal = mapToItem(_mapTo, mouse.x, mouse.y);
-                        if (Math.abs(gestureArea.origX - mouseReal.x) < threshold && Math.abs(gestureArea.origY - mouseReal.y) < threshold) {
-                            rumbleEffect.start();
-                            Lipstick.compositor.animateInById(model.window);
-                        }*/
-                    }
-                }
-            }
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
-        }
+        AppGrid {}
     }
 }
