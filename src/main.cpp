@@ -36,7 +36,6 @@ int main(int argc, char **argv)
 
 	QmlPath::append("/usr/share/lipstick-ducky-home-qt5/qml");
 	QGuiApplication::setFont(QFont("Lato"));
-	QIcon::setThemeName("Papirus-Maia"); // TODO: Don't hardcode theme name
 
 	qmlRegisterType<DuckyWindowModel>("Ducky", 1, 0, "DuckyWindowModel");
 

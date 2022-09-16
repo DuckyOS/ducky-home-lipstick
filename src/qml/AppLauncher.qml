@@ -98,6 +98,7 @@ Drawer {
                 Component.onCompleted: {
                     if(modelData) {
                         launcherItem.iconText.text = modelData.object.title;
+                        
                         if (!modelData.object.iconId.includes('/')) launcherItem.iconImage.icon.name = modelData.object.iconId;
                         if (modelData.object.iconId.includes('/')) launcherItem.iconImage.icon.source = "file://" + modelData.object.iconId;
                     }

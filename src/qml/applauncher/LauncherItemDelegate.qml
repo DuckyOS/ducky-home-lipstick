@@ -70,13 +70,12 @@ MouseArea {
             height: parent.height
             width: parent.width
             background: Item {}
-            icon.width: width
-            icon.height: height
-            icon.color: "transparent"
-
             onClicked: {
                 root.handleTap();
             }
+            icon.color: "transparent"
+            icon.width: parent.width
+            icon.height: parent.height
         }
     }
 
