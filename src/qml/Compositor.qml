@@ -189,6 +189,8 @@ Item {
             } else {
                 animateInById(w.window.windowId); 
             }
+
+            appLauncher.close();
         }   
 
         onWindowRemoved: {
@@ -294,6 +296,19 @@ Item {
                     comp.topmostApplicationWindow.oMaskItem.clipW = mouseReal.x;
                 }
             }
+        }
+    }
+
+    AppLauncher {
+        id: appLauncher
+        wallpaperItem: root
+        z: 6
+    }
+
+    Connections {
+        target: Lipstick.compositor
+        function onDisplayOff() {
+            appLauncher.close();
         }
     }
 
